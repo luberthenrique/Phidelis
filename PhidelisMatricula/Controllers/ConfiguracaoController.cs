@@ -57,7 +57,7 @@ namespace PhidelisMatricula.Presentation.Controllers
         /// O tempo padrão de execução do serviço é de <b>600 segundos</b>. <br />
         /// O tempo de execução do serviço é armazenado na <b>memória do servidor</b>, sendo necessário efetuar a <b>alteração</b> do mesmo <b>sempre que o serviço for reniciado.</b>
         /// </remarks>
-        [HttpPost("maticulas/tempo-atualizacao")]
+        [HttpPut("maticulas/tempo-atualizacao")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> PostTempoAtualizacao([FromQuery]int tempoAtualizacao)
