@@ -55,7 +55,7 @@ namespace PhidelisMatricula.Application.Services
             if (pagina < 1)
                 _notifications.AddNotification("", "A página deve ser maior que 0.");
 
-            if (status!= null && StatusMatriculaEnumerable.GetList().Contains(status.Value))
+            if (status!= null && !StatusMatriculaEnumerable.GetList().Contains(status.Value))
                 _notifications.AddNotification("", "O status não existe no sistema.");
 
             if (_notifications.HasNotifications())
