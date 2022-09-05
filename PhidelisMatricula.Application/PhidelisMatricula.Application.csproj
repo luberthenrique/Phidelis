@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PhidelisMatricula.Domain.Core\PhidelisMatricula.Domain.Core.csproj" />
+    <ProjectReference Include="..\PhidelisMatricula.Infra.Data\PhidelisMatricula.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>
