@@ -120,9 +120,9 @@ namespace PhidelisMatricula.Presentation.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _matriculaAppService.RegisterAsync(matricula);
+            var retorno = await _matriculaAppService.RegisterAsync(matricula);
 
-            return Response(matricula);
+            return Response(retorno);
         }
 
         /// <summary>
