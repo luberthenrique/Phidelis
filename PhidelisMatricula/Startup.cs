@@ -46,10 +46,11 @@ namespace PhidelisMatricula
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerSetup();
+                app.UseDeveloperExceptionPage();                
             }
+
+            app.UseSwagger();
+            app.UseSwaggerSetup();
 
             app.UseHttpsRedirection();
 
