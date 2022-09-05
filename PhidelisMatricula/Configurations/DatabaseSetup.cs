@@ -13,7 +13,6 @@ namespace PhidelisMatricula.Presentation.Configurations
             if (services == null) throw new ArgumentNullException(nameof(services));
 
             var defaultConnectionString = configuration.GetConnectionString("DefaultConnection");
-            var gerenciadorConnectionString = configuration.GetConnectionString("GerenciadorConnection");
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(defaultConnectionString, ServerVersion.AutoDetect(defaultConnectionString)));
