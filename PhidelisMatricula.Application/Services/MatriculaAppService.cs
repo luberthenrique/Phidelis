@@ -95,7 +95,7 @@ namespace PhidelisMatricula.Application.Services
 
         public async Task<MatriculaViewModel> GetByIdAsync(long id)
         {
-            var matricula = await _matriculaRepository.GetAll().Include(c => c.Id).FirstOrDefaultAsync(c => c.Id == id);
+            var matricula = await _matriculaRepository.GetAll().Include(c => c.Aluno).FirstOrDefaultAsync(c => c.Id == id);
 
             if (matricula is null)
                 return null;

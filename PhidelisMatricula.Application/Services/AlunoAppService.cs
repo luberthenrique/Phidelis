@@ -15,13 +15,16 @@ namespace PhidelisMatricula.Application.Services
     public class AlunoAppService : BaseApplicationService, IAlunoAppService
     {
         private readonly IAlunoRepository _alunoRepository;
+        private readonly IMatriculaRepository _matriculaRepository;
 
         public AlunoAppService(
             INotificationHandler<DomainNotification> notifications,
-            IAlunoRepository alunoRepository
+            IAlunoRepository alunoRepository,
+            IMatriculaRepository matriculaRepository
             ) : base(notifications)
         {
             _alunoRepository = alunoRepository;
+            _matriculaRepository = matriculaRepository;
         }
 
         public async Task<bool> AnyAsync(long id)
@@ -115,6 +118,12 @@ namespace PhidelisMatricula.Application.Services
 
         public async Task RemoveAsync(long id)
         {
+            if (await _matriculaRepository.GetAll().Where(c => c.IdAluno == id).AnyAsync())
+            {
+                _notifications.AddNotification("", "O aluno informado possui matrícula(s) vinculadas. É necessário apagar primeiro a matrícula.");
+                return;
+            }
+
             await _alunoRepository.RemoveAsync(id);
             await _alunoRepository.SaveChangesAsync();
         }
