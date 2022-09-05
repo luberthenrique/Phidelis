@@ -95,8 +95,6 @@ namespace PhidelisMatricula.Services.Api.HostedService
 
         public async Task Redefinir()
         {
-            await Task.Delay(60000);
-
             _tempoExecucao = 600;
             await StartAsync(new CancellationToken());
         }

@@ -81,7 +81,7 @@ namespace PhidelisMatricula.Presentation.Controllers
         /// <returns></returns>
         /// <remarks>
         /// <b>Observações:</b><br /><br />
-        /// O serviço será parado para execução da limpeza e será iniciado novamente após um minuto.
+        /// O serviço será parado para execução da limpeza e será iniciado novamente no final do processamento.
         /// </remarks>
         [HttpDelete("clear")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
@@ -95,7 +95,7 @@ namespace PhidelisMatricula.Presentation.Controllers
                 await _matriculaAppService.Truncate();
                 await _alunoAppService.Truncate();
 
-                _ = _incluirMatriculaHostedService.Redefinir();
+                await _incluirMatriculaHostedService.Redefinir();
 
                 return Ok();
             }
