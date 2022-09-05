@@ -30,7 +30,7 @@ namespace PhidelisMatricula.Tests.Validations
 
         [Theory]
         [MemberData(nameof(AlunosValidos))]
-        public void Validar_DeveSerValido_QuandoParametrosValidos(Aluno aluno)
+        public void Validar_Deve_Ser_Valido_QuandoParametrosValidos(Aluno aluno)
         {
             var validationResult = new AlunoValidation().Validate(aluno);
 
@@ -39,7 +39,7 @@ namespace PhidelisMatricula.Tests.Validations
 
         [Theory]
         [MemberData(nameof(AlunosInValidos))]
-        public void Validar_DeveSerInValido_QuandoParametrosInvalidos(Aluno aluno)
+        public void Validar_Deve_Ser_Invalido_QuandoParametrosInvalidos(Aluno aluno)
         {
             var validationResult = new AlunoValidation().Validate(aluno);
 
