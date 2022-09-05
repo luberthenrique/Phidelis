@@ -64,7 +64,14 @@ namespace PhidelisMatricula.Presentation.Controllers
         {
             try
             {
-                await _incluirMatriculaHostedService.AtualizarTempoExecucao(tempoAtualizacao);
+                if (tempoAtualizacao < 5)
+                {
+                    NotifyError("", "O tempo mínimo para execução do serviço de inclusão de matrículas é de 5 segundos.");
+                }
+                else
+                {
+                    await _incluirMatriculaHostedService.AtualizarTempoExecucao(tempoAtualizacao);
+                }                
 
                 return Ok();
             }
