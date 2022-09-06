@@ -9,7 +9,7 @@ namespace PhidelisMatricula.Presentation.Controllers
 {
     public abstract class ApiController : ControllerBase
     {
-        private readonly DomainNotificationHandler _notifications;
+        protected readonly DomainNotificationHandler _notifications;
 
         protected ApiController(INotificationHandler<DomainNotification> notifications)
         {

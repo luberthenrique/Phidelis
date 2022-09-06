@@ -4,6 +4,7 @@ using PhidelisMatricula.Application.Interfaces;
 using PhidelisMatricula.Domain.Core.Notifications;
 using PhidelisMatricula.Services.Api.HostedService;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PhidelisMatricula.Presentation.Controllers
@@ -66,14 +67,14 @@ namespace PhidelisMatricula.Presentation.Controllers
             {
                 if (tempoAtualizacao < 5)
                 {
-                    NotifyError("", "O tempo mínimo para execução do serviço de inclusão de matrículas é de 5 segundos.");
+                    _notifications.AddNotification("", "O tempo mínimo para execução do serviço de inclusão de matrículas é de 5 segundos.");
                 }
                 else
                 {
                     await _incluirMatriculaHostedService.AtualizarTempoExecucao(tempoAtualizacao);
                 }                
 
-                return Ok();
+                return Response();
             }
             catch (System.Exception)
             {
@@ -98,6 +99,7 @@ namespace PhidelisMatricula.Presentation.Controllers
             try
             {
                 await _incluirMatriculaHostedService.StopAsync(new System.Threading.CancellationToken());
+                Thread.Sleep(2000);
                 
                 await _matriculaAppService.Truncate();
                 await _alunoAppService.Truncate();
