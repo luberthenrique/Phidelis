@@ -31,7 +31,7 @@ namespace PhidelisMatricula.Infra.Data.Repository
 
         public virtual IQueryable<TEntity> GetAll()
         {
-            return DbSet;
+            return DbSet.AsNoTracking();
         }
 
         public virtual void Update(TEntity obj)
