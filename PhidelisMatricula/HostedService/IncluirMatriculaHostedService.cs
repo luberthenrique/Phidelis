@@ -82,6 +82,9 @@ namespace PhidelisMatricula.Services.Api.HostedService
 
         public async Task AtualizarTempoExecucao(int segundos)
         {
+            await StartAsync(new CancellationToken());
+            Thread.Sleep(2000);
+
             _tempoExecucao = segundos;
             _timer.Dispose();
 
