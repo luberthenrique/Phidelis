@@ -18,6 +18,8 @@ namespace PhidelisMatricula.Services.Api.HostedService
 
 
         private int _tempoExecucao;
+        private bool _executando = false;
+        private bool _permiteExecutar = true;
         Timer _timer;
 
         public IncluirMatriculaHostedService(
@@ -31,12 +33,16 @@ namespace PhidelisMatricula.Services.Api.HostedService
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            _permiteExecutar = true;
+
             _timer = new Timer(ExecuteProcess, null, TimeSpan.Zero, TimeSpan.FromSeconds(_tempoExecucao));
+
             return Task.CompletedTask;
         }
 
         private async void ExecuteProcess(object state)
         {
+            _executando = true;
             _logger.LogInformation("### Executando serviço de inclusão de matrícula ###");
 
             using var scope = _serviceProvider.CreateScope();
@@ -49,6 +55,9 @@ namespace PhidelisMatricula.Services.Api.HostedService
             Random random = new Random();
             foreach (var item in list)
             {
+                if (!_permiteExecutar)
+                    return;
+
                 var idade = random.Next(5, 15);
                 var aluno = new AdicionarAlunoViewModel
                 {
@@ -71,10 +80,13 @@ namespace PhidelisMatricula.Services.Api.HostedService
             }
 
             _logger.LogInformation($"Serviço de inclusão de matrícula finalizado {DateTime.Now}");
+            _executando = false;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            _permiteExecutar = false;
+
             _logger.LogInformation("### Proccess stoping ###");
             _logger.LogInformation($"{DateTime.Now}");
             return Task.CompletedTask;
@@ -82,9 +94,10 @@ namespace PhidelisMatricula.Services.Api.HostedService
 
         public async Task AtualizarTempoExecucao(int segundos)
         {
-            await StartAsync(new CancellationToken());
-            Thread.Sleep(2000);
+            if (_tempoExecucao == segundos)
+                return;
 
+            await StopAsync(new CancellationToken());
             _tempoExecucao = segundos;
             _timer.Dispose();
 
